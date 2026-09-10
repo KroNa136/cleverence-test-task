@@ -73,8 +73,15 @@ public class ServerTests
         {
             tasks.Add(Task.Run(() =>
             {
-                int value = Server.GetCount();
-                Assert.True(value >= 0);
+                int previousCount = 0;
+
+                for (int j = 0; j < operationsPerActor; j++)
+                {
+                    int value = Server.GetCount();
+                    Assert.True(value >= previousCount);
+
+                    previousCount = value;
+                }
             }));
         }
 
